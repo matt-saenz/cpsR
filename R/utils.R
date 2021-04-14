@@ -70,6 +70,7 @@ get_data <- function(url, show_url) {
   # Get data from Census API
 
   resp <- httr::GET(url, httr::progress())
+  cat("\n") # https://github.com/r-lib/httr/issues/344
   httr::stop_for_status(resp, task = "download data")
 
   # Clean and return
