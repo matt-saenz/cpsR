@@ -62,11 +62,23 @@ get_data <- function(url, show_url) {
 
   resp <- httr::GET(url, httr::progress())
   cat("\n") # https://github.com/r-lib/httr/issues/344
+
+  # Check response
+
   httr::stop_for_status(resp, task = "download data")
+
+  if (httr::http_type(resp) != "application/json") {
+    stop("Census API did not return JSON", call. = FALSE)
+  }
 
   # Clean and return
 
   mat <- jsonlite::fromJSON(httr::content(resp, as = "text")) # Matrix
+
+  if (!is.matrix(mat)) {
+    stop("Census API data not parsed as expected", call. = FALSE)
+  }
+
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
   cols <- mat[-1, , drop = FALSE] # Matrix of columns
   df <- as.data.frame(cols)
