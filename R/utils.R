@@ -1,16 +1,15 @@
 
 
 check_key <- function(key) {
-  if (!is.null(key)) {
+  if (is.null(key)) {
+    if (Sys.getenv("CENSUS_API_KEY") == "") {
+      stop("You must provide a Census API `key`", call. = FALSE)
+    }
+    Sys.getenv("CENSUS_API_KEY")
+  } else {
     message("Store your `key` in env var `CENSUS_API_KEY` to pass automatically")
-    return(key)
+    key
   }
-
-  if (Sys.getenv("CENSUS_API_KEY") == "") {
-    stop("You must provide a Census API `key`", call. = FALSE)
-  }
-
-  Sys.getenv("CENSUS_API_KEY")
 }
 
 
