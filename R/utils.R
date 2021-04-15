@@ -1,18 +1,10 @@
 
 
 check_key <- function(key) {
-
-  # If non-`NULL` value was passed, check roughly and return early
-
   if (!is.null(key)) {
-    if (length(key) != 1 || !is.character(key)) {
-      stop("Pass your `key` as a string", call. = FALSE)
-    }
     message("Store your `key` in env var `CENSUS_API_KEY` to pass automatically")
     return(key)
   }
-
-  # If `NULL` was passed (default), look for env var `CENSUS_API_KEY`
 
   if (Sys.getenv("CENSUS_API_KEY") == "") {
     stop("You must provide a Census API `key`", call. = FALSE)
@@ -89,6 +81,12 @@ convert_cols <- function(df, noisy = FALSE) {
   # For each column, check if strictly numeric and convert when possible
 
   for (i in seq_along(df)) {
+
+    # Skip if column is already numeric
+
+    if (is.numeric(df[[i]])) {
+      next
+    }
 
     # Test: Does coercing to numeric result in any `NA` values? If not,
     # convert to numeric.
