@@ -46,7 +46,7 @@ check_year <- function(year, dataset) {
 
   if (!(year %in% years)) {
     stop(
-      glue::glue("Years {years[1]} through {years[length(years)]} are supported"),
+      glue::glue("Years {min(years)} to {max(years)} are currently supported"),
       call. = FALSE
     )
   }
@@ -60,12 +60,18 @@ get_data <- function(url, show_url) {
 
   # Get data from Census API
 
-  resp <- httr::GET(url, httr::progress())
-  cat("\n") # https://github.com/r-lib/httr/issues/344
+  resp <- httr::GET(url)
 
   # Check response
 
-  httr::stop_for_status(resp, task = "download data")
+  status <- httr::http_status(resp)
+
+  if (resp$status_code != 200) {
+    stop(
+      "Census API request failed [", resp$status_code, "]: ", status$reason,
+      call. = FALSE
+    )
+  }
 
   if (httr::http_type(resp) != "application/json") {
     stop("Census API did not return JSON", call. = FALSE)
@@ -73,7 +79,7 @@ get_data <- function(url, show_url) {
 
   # Clean and return
 
-  mat <- jsonlite::fromJSON(httr::content(resp, as = "text")) # Matrix
+  mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
 
   if (!is.matrix(mat)) {
     stop("Census API data not parsed as expected", call. = FALSE)
@@ -87,7 +93,7 @@ get_data <- function(url, show_url) {
 }
 
 
-convert_cols <- function(df, noisy = FALSE) {
+convert_cols <- function(df) {
 
   # For each column, check if strictly numeric and convert when possible
 
@@ -107,10 +113,6 @@ convert_cols <- function(df, noisy = FALSE) {
     )
 
     if (numeric_col) {
-      if (noisy) {
-        col_name <- names(df)[i]
-        message("Converting column `", col_name, "` to numeric")
-      }
       df[[i]] <- as.numeric(df[[i]])
     }
   }

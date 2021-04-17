@@ -35,6 +35,8 @@ get_asec <- function(vars, year, key = NULL,
     query = list(get = vars, key = key)
   )
 
+  message("Getting CPS ASEC microdata for ", year)
+
   df <- get_data(url, show_url = show_url)
   df <- convert_cols(df)
 
@@ -72,15 +74,19 @@ get_basic <- function(vars, year, month, key = NULL,
     stop("Pass one `month` at a time as a number", call. = FALSE)
   }
 
-  month <- tolower(month.abb)[month] # Format for Census API
+  month_abb <- tolower(month.abb)[month] # Format for Census API
+  month_name <- month.name[month] # Format for message
 
   # Get data -------------------------------------------------------------------
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = glue::glue("data/{year}/cps/basic/{month}"),
+    path = glue::glue("data/{year}/cps/basic/{month_abb}"),
     query = list(get = vars, key = key)
   )
+
+  msg <- paste("Getting basic monthly CPS microdata for", month_name, year)
+  message(msg)
 
   df <- get_data(url, show_url = show_url)
   df <- convert_cols(df)
