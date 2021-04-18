@@ -84,12 +84,12 @@ get_data <- function(url, show_url) {
 
   mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
 
-  if (!is.matrix(mat)) {
+  if (!is.matrix(mat) || !is.character(mat)) {
     stop("Census API data not parsed as expected", call. = FALSE)
   }
 
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
-  cols <- mat[-1, , drop = FALSE] # Matrix of columns
+  cols <- mat[-1, , drop = FALSE] # Character matrix of columns
   df <- as.data.frame(cols)
   names(df) <- tolower(col_names)
   df
@@ -98,15 +98,12 @@ get_data <- function(url, show_url) {
 
 convert_cols <- function(df) {
 
-  # For each column, check if strictly numeric and convert when possible
+  # All columns of data frame returned by `get_data()` are character vectors
+  # (due to how Census API returns data). To save users from having to convert
+  # columns to numeric every time they get data, this function checks if each
+  # column can be safely coerced to numeric and converts accordingly.
 
   for (i in seq_along(df)) {
-
-    # Skip if column is already numeric
-
-    if (is.numeric(df[[i]])) {
-      next
-    }
 
     # Test: Does coercing to numeric result in any `NA` values? If not,
     # convert to numeric.
