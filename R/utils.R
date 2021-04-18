@@ -46,7 +46,10 @@ check_year <- function(year, dataset) {
 
   if (!(year %in% years)) {
     stop(
-      glue::glue("Years {min(years)} to {max(years)} are currently supported"),
+      glue::glue(
+        "Invalid `year`, ",
+        "years {min(years)} to {max(years)} are currently supported"
+      ),
       call. = FALSE
     )
   }
