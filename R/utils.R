@@ -101,7 +101,7 @@ convert_cols <- function(df) {
   # All columns of data frame returned by `get_data()` are character vectors
   # (due to how Census API returns data). To save users from having to convert
   # columns to numeric every time they get data, this function checks if each
-  # column is 'likely numeric' (as defined below) and converts accordingly.
+  # column can be safely coerced to numeric and converts accordingly.
 
   for (i in seq_along(df)) {
 
