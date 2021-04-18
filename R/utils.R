@@ -98,7 +98,10 @@ get_data <- function(url, show_url) {
 
 convert_cols <- function(df) {
 
-  # For each column, check if strictly numeric and convert when possible
+  # All columns of data frame returned by `get_data()` are character vectors
+  # (due to how Census API returns data). To save users from having to convert
+  # columns to numeric every time they get data, this function checks if each
+  # column is 'likely numeric' (as defined below) and converts accordingly.
 
   for (i in seq_along(df)) {
 
