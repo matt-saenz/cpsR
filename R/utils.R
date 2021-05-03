@@ -33,12 +33,12 @@ check_year <- function(year, dataset) {
 
   # Check available years here: https://data.census.gov/mdat/#/
 
-  lookup_years <- list(
+  lookup <- list(
     basic = 1994:2021,
     asec = 2014:2020
   )
 
-  years <- lookup_years[[dataset]]
+  years <- lookup[[dataset]]
 
   if (length(year) != 1 || !is.numeric(year)) {
     stop("Pass one `year` at a time as a number", call. = FALSE)
@@ -46,10 +46,8 @@ check_year <- function(year, dataset) {
 
   if (!(year %in% years)) {
     stop(
-      glue::glue(
-        "Invalid `year`, ",
-        "years {min(years)} to {max(years)} are currently supported"
-      ),
+      "Invalid `year`, years ", min(years), " to ", max(years),
+      " are currently supported",
       call. = FALSE
     )
   }
