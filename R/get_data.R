@@ -137,7 +137,7 @@ get_data <- function(url, show_url) {
   df <- as.data.frame(cols) # All columns are character vectors
   names(df) <- tolower(col_names)
 
-  # Coerce to numeric when safe
+  # Coerce columns to numeric when safe
 
   for (i in seq_along(df)) {
     na_before <- sum(is.na(df[[i]]))
