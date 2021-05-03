@@ -31,7 +31,7 @@ get_asec <- function(vars, year, key = NULL,
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = glue::glue("data/{year}/cps/asec/mar"),
+    path = paste0("data/", year, "/cps/asec/mar"),
     query = list(get = vars, key = key)
   )
 
@@ -79,7 +79,7 @@ get_basic <- function(vars, year, month, key = NULL,
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = glue::glue("data/{year}/cps/basic/{month_abb}"),
+    path = paste0("data/", year, "/cps/basic/", month_abb),
     query = list(get = vars, key = key)
   )
 
