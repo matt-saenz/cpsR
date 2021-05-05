@@ -134,7 +134,7 @@ get_data <- function(url, show_url) {
 
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
   cols <- mat[-1, , drop = FALSE] # Character matrix of columns
-  df <- as.data.frame(cols) # All columns are character vectors
+  df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
   names(df) <- tolower(col_names)
 
   # Coerce columns to numeric when safe
