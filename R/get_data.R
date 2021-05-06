@@ -31,14 +31,12 @@ get_asec <- function(vars, year, key = NULL,
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = glue::glue("data/{year}/cps/asec/mar"),
+    path = paste0("data/", year, "/cps/asec/mar"),
     query = list(get = vars, key = key)
   )
 
   message("Getting CPS ASEC microdata for ", year)
-
   df <- get_data(url, show_url = show_url)
-  df <- convert_cols(df)
 
   # Return data ----------------------------------------------------------------
 
@@ -74,14 +72,14 @@ get_basic <- function(vars, year, month, key = NULL,
     stop("Pass one `month` at a time as a number", call. = FALSE)
   }
 
+  # Get data -------------------------------------------------------------------
+
   month_abb <- tolower(month.abb)[month] # Format for Census API
   month_name <- month.name[month] # Format for message
 
-  # Get data -------------------------------------------------------------------
-
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = glue::glue("data/{year}/cps/basic/{month_abb}"),
+    path = paste0("data/", year, "/cps/basic/", month_abb),
     query = list(get = vars, key = key)
   )
 
@@ -89,7 +87,6 @@ get_basic <- function(vars, year, month, key = NULL,
   message(msg)
 
   df <- get_data(url, show_url = show_url)
-  df <- convert_cols(df)
 
   # Return data ----------------------------------------------------------------
 
@@ -98,4 +95,60 @@ get_basic <- function(vars, year, month, key = NULL,
   } else {
     df
   }
+}
+
+
+get_data <- function(url, show_url) {
+  if (show_url) {
+    message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
+  }
+
+  # Send request ---------------------------------------------------------------
+
+  resp <- httr::GET(url)
+
+  # Check response -------------------------------------------------------------
+
+  status <- httr::http_status(resp)
+
+  if (resp$status_code != 200) {
+    stop(
+      "Census API request failed [", resp$status_code, "]: ", status$reason,
+      call. = FALSE
+    )
+  }
+
+  if (httr::http_type(resp) != "application/json") {
+    stop("Census API did not return JSON", call. = FALSE)
+  }
+
+  # Parse response -------------------------------------------------------------
+
+  mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
+
+  if (!is.matrix(mat) || !is.character(mat)) {
+    stop("Census API data not parsed as expected", call. = FALSE)
+  }
+
+  # Make data frame ------------------------------------------------------------
+
+  col_names <- mat[1, , drop = TRUE] # Character vector of column names
+  cols <- mat[-1, , drop = FALSE] # Character matrix of columns
+  df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
+  names(df) <- tolower(col_names)
+
+  # Coerce columns to numeric when safe
+
+  for (i in seq_along(df)) {
+    na_before <- sum(is.na(df[[i]]))
+    numeric_col <- suppressWarnings(as.numeric(df[[i]]))
+    na_after <- sum(is.na(numeric_col))
+    if (na_after == na_before) {
+      df[[i]] <- numeric_col
+    }
+  }
+
+  # Return data frame ----------------------------------------------------------
+
+  df
 }

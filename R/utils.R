@@ -33,12 +33,12 @@ check_year <- function(year, dataset) {
 
   # Check available years here: https://data.census.gov/mdat/#/
 
-  lookup_years <- list(
+  lookup <- list(
     basic = 1994:2021,
     asec = 2014:2020
   )
 
-  years <- lookup_years[[dataset]]
+  years <- lookup[[dataset]]
 
   if (length(year) != 1 || !is.numeric(year)) {
     stop("Pass one `year` at a time as a number", call. = FALSE)
@@ -46,76 +46,9 @@ check_year <- function(year, dataset) {
 
   if (!(year %in% years)) {
     stop(
-      glue::glue(
-        "Invalid `year`, ",
-        "years {min(years)} to {max(years)} are currently supported"
-      ),
+      "Invalid `year`, years ", min(years), " to ", max(years),
+      " are currently supported",
       call. = FALSE
     )
   }
-}
-
-
-get_data <- function(url, show_url) {
-  if (show_url) {
-    message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
-  }
-
-  # Get data from Census API
-
-  resp <- httr::GET(url)
-
-  # Check response
-
-  status <- httr::http_status(resp)
-
-  if (resp$status_code != 200) {
-    stop(
-      "Census API request failed [", resp$status_code, "]: ", status$reason,
-      call. = FALSE
-    )
-  }
-
-  if (httr::http_type(resp) != "application/json") {
-    stop("Census API did not return JSON", call. = FALSE)
-  }
-
-  # Clean and return
-
-  mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
-
-  if (!is.matrix(mat) || !is.character(mat)) {
-    stop("Census API data not parsed as expected", call. = FALSE)
-  }
-
-  col_names <- mat[1, , drop = TRUE] # Character vector of column names
-  cols <- mat[-1, , drop = FALSE] # Character matrix of columns
-  df <- as.data.frame(cols)
-  names(df) <- tolower(col_names)
-  df
-}
-
-
-convert_cols <- function(df) {
-
-  # All columns of data frame returned by `get_data()` are character vectors
-  # (due to how Census API returns data). To save users from having to convert
-  # columns to numeric every time they get data, this function checks if each
-  # column can be safely coerced to numeric and converts accordingly.
-
-  for (i in seq_along(df)) {
-
-    # Test: Does coercing to numeric result in any `NA` values? If not,
-    # convert to numeric.
-
-    numeric_col <- suppressWarnings(
-      !any(is.na(as.numeric(df[[i]])))
-    )
-
-    if (numeric_col) {
-      df[[i]] <- as.numeric(df[[i]])
-    }
-  }
-
-  df
 }
