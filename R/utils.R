@@ -20,7 +20,7 @@ check_vars <- function(vars) {
 
   if (any(grepl(pattern = ",", x = vars))) {
     stop(
-      "Each element of `vars` character vector must correspond to single variable",
+      "Each element of `vars` character vector must correspond to a single variable",
       call. = FALSE
     )
   }
