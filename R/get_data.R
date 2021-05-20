@@ -83,9 +83,7 @@ get_basic <- function(vars, year, month, key = NULL,
     query = list(get = vars, key = key)
   )
 
-  msg <- paste("Getting basic monthly CPS microdata for", month_name, year)
-  message(msg)
-
+  message(paste("Getting basic monthly CPS microdata for", month_name, year))
   df <- get_data(url, show_url = show_url)
 
   # Return data ----------------------------------------------------------------
