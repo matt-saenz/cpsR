@@ -4,25 +4,28 @@
 \alias{get_asec}
 \title{Load CPS ASEC microdata from the Census API}
 \usage{
-get_asec(vars, year, key = NULL, show_url = FALSE, tibble = TRUE)
+get_asec(vars, year, key = get_key(), show_url = FALSE, tibble = TRUE)
 }
 \arguments{
 \item{vars}{Character vector of variables to retrieve, where each vector
-element corresponds to a single variable.}
+element corresponds to the name of a single variable. Variable names can
+be given in uppercase or lowercase but are always made lowercase in the
+returned data.}
 
 \item{year}{Year of data to retrieve.}
 
 \item{key}{\href{https://api.census.gov/data/key_signup.html}{Census API key}.
-Store in env var \code{CENSUS_API_KEY} to pass automatically.}
+Defaults to environment variable \code{CENSUS_API_KEY}.}
 
-\item{show_url}{If \code{TRUE}, show URL request was sent to
+\item{show_url}{If \code{TRUE}, show the URL the request was sent to
 (with \code{key} suppressed). Defaults to \code{FALSE}.}
 
-\item{tibble}{If \code{TRUE} (default), return data as a tibble. If
-\code{FALSE}, return data as a base data frame.}
+\item{tibble}{If \code{TRUE} (default), return data as a
+\href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
+as a base data frame.}
 }
 \value{
-A tibble or base data frame with requested data.
+A tibble or base data frame.
 }
 \description{
 \code{get_asec()} loads

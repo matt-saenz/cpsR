@@ -1,31 +1,41 @@
 
 
-check_key <- function(key) {
-  if (is.null(key)) {
-    if (Sys.getenv("CENSUS_API_KEY") == "") {
-      stop("You must provide a Census API `key`", call. = FALSE)
-    }
-    Sys.getenv("CENSUS_API_KEY")
-  } else {
-    message("Store your `key` in env var `CENSUS_API_KEY` to pass automatically")
-    key
-  }
-}
-
-
-check_vars <- function(vars) {
-  if (!is.character(vars)) {
-    stop("Pass `vars` as a character vector", call. = FALSE)
-  }
-
-  if (any(grepl(pattern = ",", x = vars))) {
+get_key <- function() {
+  if (Sys.getenv("CENSUS_API_KEY") == "") {
     stop(
-      "Each element of `vars` character vector must correspond to a single variable",
+      "Census API key not found, supply with `key` argument or env var `CENSUS_API_KEY`",
       call. = FALSE
     )
   }
 
-  paste(toupper(vars), collapse = ",") # Format for Census API
+  Sys.getenv("CENSUS_API_KEY")
+}
+
+
+check_key <- function(key) {
+  if (!is.character(key) || length(key) != 1 || key == "") {
+    stop("`key` must be a non-empty string", call. = FALSE)
+  }
+}
+
+
+format_vars <- function(vars) {
+  if (!is.character(vars)) {
+    stop("`vars` must be a character vector", call. = FALSE)
+  }
+
+  if (any(grepl(pattern = "[^A-Za-z0-9_]", x = vars))) {
+    stop(
+      "Elements of `vars` must only contain letters, digits, and underscores",
+      call. = FALSE
+    )
+  }
+
+  if (any(duplicated(vars))) {
+    stop("`vars` must not contain any duplicate elements", call. = FALSE)
+  }
+
+  paste(toupper(vars), collapse = ",")
 }
 
 
@@ -34,14 +44,14 @@ check_year <- function(year, dataset) {
   # Check available years here: https://data.census.gov/mdat/#/
 
   lookup <- list(
-    basic = 1994:2021,
-    asec = 2014:2020
+    asec = 2014:2020,
+    basic = 1994:2021
   )
 
   years <- lookup[[dataset]]
 
-  if (length(year) != 1 || !is.numeric(year)) {
-    stop("Pass one `year` at a time as a number", call. = FALSE)
+  if (!is.numeric(year) || length(year) != 1) {
+    stop("`year` must be a number", call. = FALSE)
   }
 
   if (!(year %in% years)) {
