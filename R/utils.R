@@ -47,6 +47,9 @@ format_vars <- function(vars) {
 
 
 check_year <- function(year, dataset) {
+  if (!is_number(year)) {
+    stop("`year` must be a number", call. = FALSE)
+  }
 
   # Check available years here: https://data.census.gov/mdat/#/
 
@@ -56,10 +59,6 @@ check_year <- function(year, dataset) {
   )
 
   years <- lookup[[dataset]]
-
-  if (!is_number(year)) {
-    stop("`year` must be a number", call. = FALSE)
-  }
 
   if (year %!in% years) {
     stop(
