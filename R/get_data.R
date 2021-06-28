@@ -7,25 +7,28 @@
 #' microdata from the Census API.
 #'
 #' @param vars Character vector of variables to retrieve, where each vector
-#'   element corresponds to a single variable.
+#'   element corresponds to the name of a single variable. Variable names can
+#'   be given in uppercase or lowercase but are always made lowercase in the
+#'   returned data.
 #' @param year Year of data to retrieve.
 #' @param key \href{https://api.census.gov/data/key_signup.html}{Census API key}.
-#'   Store in env var \code{CENSUS_API_KEY} to pass automatically.
-#' @param show_url If \code{TRUE}, show URL request was sent to
+#'   Defaults to environment variable \code{CENSUS_API_KEY}.
+#' @param show_url If \code{TRUE}, show the URL the request was sent to
 #'   (with \code{key} suppressed). Defaults to \code{FALSE}.
-#' @param tibble If \code{TRUE} (default), return data as a tibble. If
-#'   \code{FALSE}, return data as a base data frame.
-#' @return A tibble or base data frame with requested data.
+#' @param tibble If \code{TRUE} (default), return data as a
+#'   \href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
+#'   as a base data frame.
+#' @return A tibble or base data frame.
 #'
 #' @export
-get_asec <- function(vars, year, key = NULL,
+get_asec <- function(vars, year, key = get_key(),
                      show_url = FALSE, tibble = TRUE) {
 
   # Check args -----------------------------------------------------------------
 
-  key <- check_key(key)
-  vars <- check_vars(vars)
+  check_key(key)
   check_year(year, dataset = "asec")
+  vars <- format_vars(vars)
 
   # Get data -------------------------------------------------------------------
 
@@ -56,20 +59,20 @@ get_asec <- function(vars, year, key = NULL,
 #'
 #' @param month Month of data to retrieve (specified as a number).
 #' @inheritParams get_asec
-#' @return A tibble or base data frame with requested data.
+#' @return A tibble or base data frame.
 #'
 #' @export
-get_basic <- function(vars, year, month, key = NULL,
+get_basic <- function(vars, year, month, key = get_key(),
                       show_url = FALSE, tibble = TRUE) {
 
   # Check args -----------------------------------------------------------------
 
-  key <- check_key(key)
-  vars <- check_vars(vars)
+  check_key(key)
   check_year(year, dataset = "basic")
+  vars <- format_vars(vars)
 
-  if (length(month) != 1 || !is.numeric(month) || !(month %in% 1:12)) {
-    stop("Pass one `month` at a time as a number", call. = FALSE)
+  if (!is_number(month) || month %!in% 1:12) {
+    stop("`month` must be a number ranging from 1 to 12", call. = FALSE)
   }
 
   # Get data -------------------------------------------------------------------
