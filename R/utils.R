@@ -1,14 +1,16 @@
 
 
 get_key <- function() {
-  if (Sys.getenv("CENSUS_API_KEY") == "") {
+  key <- Sys.getenv("CENSUS_API_KEY")
+
+  if (key == "") {
     stop(
       "Census API key not found, supply with `key` argument or env var `CENSUS_API_KEY`",
       call. = FALSE
     )
   }
 
-  Sys.getenv("CENSUS_API_KEY")
+  key
 }
 
 
