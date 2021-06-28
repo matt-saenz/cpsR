@@ -71,7 +71,7 @@ get_basic <- function(vars, year, month, key = get_key(),
   check_year(year, dataset = "basic")
   vars <- format_vars(vars)
 
-  if (!is.numeric(month) || length(month) != 1 || !(month %in% 1:12)) {
+  if (!is_number(month) || month %!in% 1:12) {
     stop("`month` must be a number ranging from 1 to 12", call. = FALSE)
   }
 

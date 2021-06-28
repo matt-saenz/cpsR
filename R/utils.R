@@ -1,5 +1,10 @@
 
 
+is_number <- function(x) is.numeric(x) && length(x) == 1
+is_string <- function(x) is.character(x) && length(x) == 1
+`%!in%` <- function(x, table) match(x, table, nomatch = 0) == 0
+
+
 get_key <- function() {
   key <- Sys.getenv("CENSUS_API_KEY")
 
@@ -15,7 +20,7 @@ get_key <- function() {
 
 
 check_key <- function(key) {
-  if (!is.character(key) || length(key) != 1 || key == "") {
+  if (!is_string(key) || key == "") {
     stop("`key` must be a non-empty string", call. = FALSE)
   }
 }
@@ -52,11 +57,11 @@ check_year <- function(year, dataset) {
 
   years <- lookup[[dataset]]
 
-  if (!is.numeric(year) || length(year) != 1) {
+  if (!is_number(year)) {
     stop("`year` must be a number", call. = FALSE)
   }
 
-  if (!(year %in% years)) {
+  if (year %!in% years) {
     stop(
       "Invalid `year`, years ", min(years), " to ", max(years), " are currently supported",
       call. = FALSE
