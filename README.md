@@ -14,8 +14,9 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 ## Overview
 
-Load CPS microdata from the Census Bureau Data API into R, including
-[basic monthly
+Load [Current Population Survey
+(CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata
+from the Census Bureau Data API into R, including [basic monthly
 CPS](https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html)
 and [CPS
 ASEC](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html)
