@@ -41,9 +41,9 @@ library(cpsR)
 library(dplyr)
 
 basic <- get_basic(
-  vars = c("prpertyp", "prtage", "pemlr", "pwcmpwgt"),
   year = 2021,
-  month = 3
+  month = 3,
+  vars = c("prpertyp", "prtage", "pemlr", "pwcmpwgt")
 )
 
 basic
