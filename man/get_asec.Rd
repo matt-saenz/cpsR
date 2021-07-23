@@ -4,15 +4,15 @@
 \alias{get_asec}
 \title{Load CPS ASEC microdata from the Census API}
 \usage{
-get_asec(vars, year, key = get_key(), show_url = FALSE, tibble = TRUE)
+get_asec(year, vars, key = get_key(), show_url = FALSE, tibble = TRUE)
 }
 \arguments{
+\item{year}{Year of data to retrieve.}
+
 \item{vars}{Character vector of variables to retrieve, where each vector
 element corresponds to the name of a single variable. Variable names can
 be given in uppercase or lowercase but are always made lowercase in the
 returned data.}
-
-\item{year}{Year of data to retrieve.}
 
 \item{key}{\href{https://api.census.gov/data/key_signup.html}{Census API key}.
 Defaults to environment variable \code{CENSUS_API_KEY}.}
