@@ -37,6 +37,11 @@ To install cpsR, run the following code:
 devtools::install_github("matt-saenz/cpsR")
 ```
 
+Next, store your [Census API key](https://api.census.gov/data/key_signup.html) in an environment variable named `CENSUS_API_KEY` for safe and easy use. You can do this by:
+
+1. Running `usethis::edit_r_environ()` to open your `.Renviron` file
+2. Adding `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
+
 ## Example
 
 ```{r example, message=FALSE}
@@ -51,13 +56,11 @@ basic <- get_basic(
 
 basic
 
-results <- basic %>%
+basic %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
     pop16plus = sum(pwcmpwgt),
     employed = sum(pwcmpwgt[pemlr %in% 1:2])
   ) %>%
   mutate(epop_ratio = employed / pop16plus)
-
-results
 ```

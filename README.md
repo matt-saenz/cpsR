@@ -34,6 +34,14 @@ To install cpsR, run the following code:
 devtools::install_github("matt-saenz/cpsR")
 ```
 
+Next, store your [Census API
+key](https://api.census.gov/data/key_signup.html) in an environment
+variable named `CENSUS_API_KEY` for safe and easy use. You can do this
+by:
+
+1.  Running `usethis::edit_r_environ()` to open your `.Renviron` file
+2.  Adding `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
+
 ## Example
 
 ``` r
@@ -47,7 +55,7 @@ basic <- get_basic(
 )
 
 basic
-#> # A tibble: 107,334 x 4
+#> # A tibble: 107,334 × 4
 #>    prpertyp prtage pemlr pwcmpwgt
 #>       <dbl>  <dbl> <dbl>    <dbl>
 #>  1        2     55     5    3768.
@@ -61,17 +69,14 @@ basic
 #>  9        1      8    -1       0 
 #> 10        2     70     5    1353.
 #> # … with 107,324 more rows
-
-results <- basic %>%
+basic %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
     pop16plus = sum(pwcmpwgt),
     employed = sum(pwcmpwgt[pemlr %in% 1:2])
   ) %>%
   mutate(epop_ratio = employed / pop16plus)
-
-results
-#> # A tibble: 1 x 3
+#> # A tibble: 1 × 3
 #>    pop16plus   employed epop_ratio
 #>        <dbl>      <dbl>      <dbl>
 #> 1 261003019. 150492839.      0.577
