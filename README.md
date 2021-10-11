@@ -69,6 +69,7 @@ basic
 #>  9        1      8    -1       0 
 #> 10        2     70     5    1353.
 #> # … with 107,324 more rows
+
 basic %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
