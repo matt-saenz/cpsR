@@ -37,10 +37,12 @@ To install cpsR, run the following code:
 devtools::install_github("matt-saenz/cpsR")
 ```
 
-Next, store your [Census API key](https://api.census.gov/data/key_signup.html) in an environment variable named `CENSUS_API_KEY` for safe and easy use. You can do this by:
+Next, register for a [Census API key](https://api.census.gov/data/key_signup.html) if you don't already have one. Once you have your key, store it in an environment variable named `CENSUS_API_KEY` for safe and easy use. You can do this in two steps:
 
-1. Running `usethis::edit_r_environ()` to open your `.Renviron` file
-2. Adding `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
+1. Run `usethis::edit_r_environ()` to open your `.Renviron` file
+2. Add `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
+
+This allows cpsR functions to automatically add your key to Census API requests (via `Sys.getenv("CENSUS_API_KEY")`) and saves you from having to manually copy-paste your key around. Using env var `CENSUS_API_KEY` also allows you to avoid sharing your key in scripts you may share with others (or post on GitHub).
 
 ## Example
 
