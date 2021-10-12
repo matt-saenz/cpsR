@@ -46,8 +46,8 @@ steps:
 This allows cpsR functions to automatically add your key to Census API
 requests (via `Sys.getenv("CENSUS_API_KEY")`) and saves you from having
 to manually copy-paste your key around. Using env var `CENSUS_API_KEY`
-also allows you to avoid sharing your key in scripts you may share with
-others (or post on GitHub).
+also allows you to avoid including your key in scripts you may share
+with others (or post on GitHub).
 
 ## Example
 

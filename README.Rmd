@@ -42,7 +42,7 @@ Next, register for a [Census API key](https://api.census.gov/data/key_signup.htm
 1. Run `usethis::edit_r_environ()` to open your `.Renviron` file
 2. Add `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
 
-This allows cpsR functions to automatically add your key to Census API requests (via `Sys.getenv("CENSUS_API_KEY")`) and saves you from having to manually copy-paste your key around. Using env var `CENSUS_API_KEY` also allows you to avoid sharing your key in scripts you may share with others (or post on GitHub).
+This allows cpsR functions to automatically add your key to Census API requests (via `Sys.getenv("CENSUS_API_KEY")`) and saves you from having to manually copy-paste your key around. Using env var `CENSUS_API_KEY` also allows you to avoid including your key in scripts you may share with others (or post on GitHub).
 
 ## Example
 
