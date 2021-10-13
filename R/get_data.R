@@ -39,15 +39,11 @@ get_asec <- function(year, vars, key = get_key(),
   )
 
   message("Getting CPS ASEC microdata for ", year)
-  df <- get_data(url, show_url = show_url)
+  df <- get_data(url = url, show_url = show_url, tibble = tibble)
 
   # Return data ----------------------------------------------------------------
 
-  if (tibble) {
-    tibble::as_tibble(df)
-  } else {
-    df
-  }
+  df
 }
 
 
@@ -88,19 +84,15 @@ get_basic <- function(year, month, vars, key = get_key(),
   )
 
   message(paste("Getting basic monthly CPS microdata for", month_name, year))
-  df <- get_data(url, show_url = show_url)
+  df <- get_data(url = url, show_url = show_url, tibble = tibble)
 
   # Return data ----------------------------------------------------------------
 
-  if (tibble) {
-    tibble::as_tibble(df)
-  } else {
-    df
-  }
+  df
 }
 
 
-get_data <- function(url, show_url) {
+get_data <- function(url, show_url, tibble) {
   if (show_url) {
     message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
   }
@@ -142,15 +134,22 @@ get_data <- function(url, show_url) {
   # Coerce columns to numeric when safe
 
   for (i in seq_along(df)) {
-    na_before <- sum(is.na(df[[i]]))
-    numeric_col <- suppressWarnings(as.numeric(df[[i]]))
+    col <- df[[i]]
+
+    na_before <- sum(is.na(col))
+    numeric_col <- suppressWarnings(as.numeric(col))
     na_after <- sum(is.na(numeric_col))
+
     if (na_after == na_before) {
       df[[i]] <- numeric_col
     }
   }
 
   # Return data frame ----------------------------------------------------------
+
+  if (tibble) {
+    df <- tibble::as_tibble(df)
+  }
 
   df
 }
