@@ -44,10 +44,15 @@ steps:
 2.  Add `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
 
 This allows cpsR functions to automatically add your key to Census API
-requests (via `Sys.getenv("CENSUS_API_KEY")`) and saves you from having
-to manually copy-paste your key around. Using env var `CENSUS_API_KEY`
-also allows you to avoid including your key in scripts you may share
-with others (or post on GitHub).
+requests (via `Sys.getenv("CENSUS_API_KEY")`). Compared to manually
+supplying your key with the `key` argument, using env var
+`CENSUS_API_KEY` has two main benefits:
+
+1.  Saves you from having to copy-paste your key around
+2.  Allows you to avoid including your key in scripts
+
+Number two is particularly important if you plan to share your scripts
+with others or post your scripts online (e.g., on GitHub).
 
 ## Example
 
