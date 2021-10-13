@@ -34,6 +34,26 @@ To install cpsR, run the following code:
 devtools::install_github("matt-saenz/cpsR")
 ```
 
+Next, register for a [Census API
+key](https://api.census.gov/data/key_signup.html) if you don’t already
+have one. Once you have your key, store it in an environment variable
+named `CENSUS_API_KEY` for safe and easy use. You can do this in two
+steps:
+
+1.  Run `usethis::edit_r_environ()` to open your `.Renviron` file
+2.  Add `CENSUS_API_KEY="your_key_here"` to your `.Renviron` file
+
+This allows cpsR functions to automatically add your key to Census API
+requests (via `Sys.getenv("CENSUS_API_KEY")`). Compared to manually
+supplying your key with the `key` argument, using env var
+`CENSUS_API_KEY` has two main benefits:
+
+1.  Saves you from having to copy-paste your key around
+2.  Allows you to avoid including your key in scripts
+
+Number two is particularly important if you plan to share your scripts
+with others or post your scripts online (e.g., on GitHub).
+
 ## Example
 
 ``` r
@@ -47,7 +67,7 @@ basic <- get_basic(
 )
 
 basic
-#> # A tibble: 107,334 x 4
+#> # A tibble: 107,334 × 4
 #>    prpertyp prtage pemlr pwcmpwgt
 #>       <dbl>  <dbl> <dbl>    <dbl>
 #>  1        2     55     5    3768.
@@ -62,16 +82,14 @@ basic
 #> 10        2     70     5    1353.
 #> # … with 107,324 more rows
 
-results <- basic %>%
+basic %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
     pop16plus = sum(pwcmpwgt),
     employed = sum(pwcmpwgt[pemlr %in% 1:2])
   ) %>%
   mutate(epop_ratio = employed / pop16plus)
-
-results
-#> # A tibble: 1 x 3
+#> # A tibble: 1 × 3
 #>    pop16plus   employed epop_ratio
 #>        <dbl>      <dbl>      <dbl>
 #> 1 261003019. 150492839.      0.577
