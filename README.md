@@ -69,7 +69,7 @@ basic <- get_basic(
 basic
 #> # A tibble: 107,334 × 4
 #>    prpertyp prtage pemlr pwcmpwgt
-#>       <dbl>  <dbl> <dbl>    <dbl>
+#>       <int>  <int> <int>    <dbl>
 #>  1        2     55     5    3768.
 #>  2        2     59     5    3474.
 #>  3        2     26     1    4511.

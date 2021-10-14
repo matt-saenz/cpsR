@@ -131,25 +131,13 @@ get_data <- function(url, show_url, tibble) {
   df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
   names(df) <- tolower(col_names)
 
-  # Coerce columns to numeric when safe
-
-  for (i in seq_along(df)) {
-    col <- df[[i]]
-
-    na_before <- sum(is.na(col))
-    numeric_col <- suppressWarnings(as.numeric(col))
-    na_after <- sum(is.na(numeric_col))
-
-    if (na_after == na_before) {
-      df[[i]] <- numeric_col
-    }
-  }
-
-  # Return data frame ----------------------------------------------------------
+  df <- utils::type.convert(df, as.is = TRUE)
 
   if (tibble) {
     df <- tibble::as_tibble(df)
   }
+
+  # Return data frame ----------------------------------------------------------
 
   df
 }
