@@ -4,7 +4,14 @@
 \alias{get_asec}
 \title{Load CPS ASEC microdata from the Census API}
 \usage{
-get_asec(year, vars, key = get_key(), show_url = FALSE, tibble = TRUE)
+get_asec(
+  year,
+  vars,
+  key = get_key(),
+  show_url = FALSE,
+  tibble = TRUE,
+  convert = TRUE
+)
 }
 \arguments{
 \item{year}{Year of data to retrieve.}
@@ -15,7 +22,9 @@ be given in uppercase or lowercase but are always made lowercase in the
 returned data.}
 
 \item{key}{\href{https://api.census.gov/data/key_signup.html}{Census API key}.
-Defaults to environment variable \code{CENSUS_API_KEY}.}
+Defaults to environment variable \code{CENSUS_API_KEY}. See the
+\href{https://github.com/matt-saenz/cpsR#readme}{README} for info on how
+(and why) to set up env var \code{CENSUS_API_KEY}.}
 
 \item{show_url}{If \code{TRUE}, show the URL the request was sent to
 (with \code{key} suppressed). Defaults to \code{FALSE}.}
@@ -23,9 +32,14 @@ Defaults to environment variable \code{CENSUS_API_KEY}.}
 \item{tibble}{If \code{TRUE} (default), return data as a
 \href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
 as a base data frame.}
+
+\item{convert}{If \code{TRUE} (default), run \code{utils::type.convert()}
+with \code{as.is = TRUE} on the data returned from the Census API. If
+\code{FALSE}, all columns in the returned data will be character vectors
+(exactly as returned from the Census API).}
 }
 \value{
-A tibble or base data frame.
+A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 }
 \description{
 \code{get_asec()} loads
