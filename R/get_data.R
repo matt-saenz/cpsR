@@ -12,17 +12,24 @@
 #'   be given in uppercase or lowercase but are always made lowercase in the
 #'   returned data.
 #' @param key \href{https://api.census.gov/data/key_signup.html}{Census API key}.
-#'   Defaults to environment variable \code{CENSUS_API_KEY}.
+#'   Defaults to environment variable \code{CENSUS_API_KEY}. See the
+#'   \href{https://github.com/matt-saenz/cpsR#readme}{README} for info on how
+#'   (and why) to set up env var \code{CENSUS_API_KEY}.
 #' @param show_url If \code{TRUE}, show the URL the request was sent to
 #'   (with \code{key} suppressed). Defaults to \code{FALSE}.
 #' @param tibble If \code{TRUE} (default), return data as a
 #'   \href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
 #'   as a base data frame.
-#' @return A tibble or base data frame.
+#' @param convert If \code{TRUE} (default), run
+#'   \code{\link[utils:type.convert]{type.convert()}} with \code{as.is = TRUE}
+#'   on the data returned from the Census API. If \code{FALSE}, all columns in
+#'   the returned data will be character vectors (exactly as returned from the
+#'   Census API).
+#' @return A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 #'
 #' @export
 get_asec <- function(year, vars, key = get_key(),
-                     show_url = FALSE, tibble = TRUE) {
+                     show_url = FALSE, tibble = TRUE, convert = TRUE) {
 
   # Check args -----------------------------------------------------------------
 
@@ -39,7 +46,13 @@ get_asec <- function(year, vars, key = get_key(),
   )
 
   message("Getting CPS ASEC microdata for ", year)
-  df <- get_data(url = url, show_url = show_url, tibble = tibble)
+
+  df <- get_data(
+    url = url,
+    show_url = show_url,
+    tibble = tibble,
+    convert = convert
+  )
 
   # Return data ----------------------------------------------------------------
 
@@ -54,12 +67,11 @@ get_asec <- function(year, vars, key = get_key(),
 #' microdata from the Census API.
 #'
 #' @param month Month of data to retrieve (specified as a number).
-#' @inheritParams get_asec
-#' @return A tibble or base data frame.
+#' @inherit get_asec params return
 #'
 #' @export
 get_basic <- function(year, month, vars, key = get_key(),
-                      show_url = FALSE, tibble = TRUE) {
+                      show_url = FALSE, tibble = TRUE, convert = TRUE) {
 
   # Check args -----------------------------------------------------------------
 
@@ -84,7 +96,13 @@ get_basic <- function(year, month, vars, key = get_key(),
   )
 
   message(paste("Getting basic monthly CPS microdata for", month_name, year))
-  df <- get_data(url = url, show_url = show_url, tibble = tibble)
+
+  df <- get_data(
+    url = url,
+    show_url = show_url,
+    tibble = tibble,
+    convert = convert
+  )
 
   # Return data ----------------------------------------------------------------
 
@@ -92,7 +110,7 @@ get_basic <- function(year, month, vars, key = get_key(),
 }
 
 
-get_data <- function(url, show_url, tibble) {
+get_data <- function(url, show_url, tibble, convert) {
   if (show_url) {
     message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
   }
@@ -103,11 +121,13 @@ get_data <- function(url, show_url, tibble) {
 
   # Check response -------------------------------------------------------------
 
-  if (resp$status_code != 200) {
+  status_code <- resp$status_code
+
+  if (status_code != 200) {
     status <- httr::http_status(resp)
 
     stop(
-      "Census API request failed [", resp$status_code, "]: ", status$reason,
+      "Census API request failed [", status_code, "]: ", status$reason,
       call. = FALSE
     )
   }
@@ -128,10 +148,13 @@ get_data <- function(url, show_url, tibble) {
 
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
   cols <- mat[-1, , drop = FALSE] # Character matrix of columns
+
   df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
   names(df) <- tolower(col_names)
 
-  df <- utils::type.convert(df, as.is = TRUE)
+  if (convert) {
+    df <- utils::type.convert(df, as.is = TRUE)
+  }
 
   if (tibble) {
     df <- tibble::as_tibble(df)
