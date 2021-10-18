@@ -67,8 +67,7 @@ get_asec <- function(year, vars, key = get_key(),
 #' microdata from the Census API.
 #'
 #' @param month Month of data to retrieve (specified as a number).
-#' @inheritParams get_asec
-#' @return A tibble or base data frame.
+#' @inherit get_asec params return
 #'
 #' @export
 get_basic <- function(year, month, vars, key = get_key(),

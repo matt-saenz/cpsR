@@ -43,7 +43,7 @@ the returned data will be character vectors (exactly as returned from the
 Census API).}
 }
 \value{
-A tibble or base data frame.
+A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 }
 \description{
 \code{get_basic()} loads
