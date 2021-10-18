@@ -36,10 +36,11 @@ Defaults to environment variable \code{CENSUS_API_KEY}. See the
 \href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
 as a base data frame.}
 
-\item{convert}{If \code{TRUE} (default), run \code{utils::type.convert()}
-with \code{as.is = TRUE} on the data returned from the Census API. If
-\code{FALSE}, all columns in the returned data will be character vectors
-(exactly as returned from the Census API).}
+\item{convert}{If \code{TRUE} (default), run
+\code{\link[utils:type.convert]{type.convert()}} with \code{as.is = TRUE}
+on the data returned from the Census API. If \code{FALSE}, all columns in
+the returned data will be character vectors (exactly as returned from the
+Census API).}
 }
 \value{
 A tibble or base data frame.

@@ -20,10 +20,11 @@
 #' @param tibble If \code{TRUE} (default), return data as a
 #'   \href{https://tibble.tidyverse.org}{tibble}. If \code{FALSE}, return data
 #'   as a base data frame.
-#' @param convert If \code{TRUE} (default), run \code{utils::type.convert()}
-#'   with \code{as.is = TRUE} on the data returned from the Census API. If
-#'   \code{FALSE}, all columns in the returned data will be character vectors
-#'   (exactly as returned from the Census API).
+#' @param convert If \code{TRUE} (default), run
+#'   \code{\link[utils:type.convert]{type.convert()}} with \code{as.is = TRUE}
+#'   on the data returned from the Census API. If \code{FALSE}, all columns in
+#'   the returned data will be character vectors (exactly as returned from the
+#'   Census API).
 #' @return A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 #'
 #' @export
