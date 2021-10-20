@@ -1,10 +1,10 @@
 
 
-#' Load CPS ASEC microdata from the Census API
+#' Load CPS ASEC microdata
 #'
 #' \code{get_asec()} loads
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
-#' microdata from the Census API.
+#' microdata using the Census API.
 #'
 #' @param year Year of data to retrieve.
 #' @param vars Character vector of variables to retrieve, where each vector
@@ -22,8 +22,8 @@
 #'   as a base data frame.
 #' @param convert If \code{TRUE} (default), run
 #'   \code{\link[utils:type.convert]{type.convert()}} with \code{as.is = TRUE}
-#'   on the data returned from the Census API. If \code{FALSE}, all columns in
-#'   the returned data will be character vectors (exactly as returned from the
+#'   on the data returned by the Census API. If \code{FALSE}, all columns in
+#'   the returned data will be character vectors (exactly as returned by the
 #'   Census API).
 #' @return A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 #'
@@ -60,11 +60,11 @@ get_asec <- function(year, vars, key = get_key(),
 }
 
 
-#' Load basic monthly CPS microdata from the Census API
+#' Load basic monthly CPS microdata
 #'
 #' \code{get_basic()} loads
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html}{basic monthly CPS}
-#' microdata from the Census API.
+#' microdata using the Census API.
 #'
 #' @param month Month of data to retrieve (specified as a number).
 #' @inherit get_asec params return
@@ -117,7 +117,8 @@ get_data <- function(url, show_url, tibble, convert) {
 
   # Send request ---------------------------------------------------------------
 
-  resp <- httr::GET(url)
+  ua <- httr::user_agent("https://github.com/matt-saenz/cpsR")
+  resp <- httr::GET(url, ua)
 
   # Check response -------------------------------------------------------------
 
@@ -150,7 +151,7 @@ get_data <- function(url, show_url, tibble, convert) {
   cols <- mat[-1, , drop = FALSE] # Character matrix of columns
 
   df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
-  names(df) <- tolower(col_names)
+  names(df) <- tolower(col_names) # Column names are always made lowercase
 
   if (convert) {
     df <- utils::type.convert(df, as.is = TRUE)

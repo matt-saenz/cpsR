@@ -5,10 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/matt-saenz/cpsR/workflows/R-CMD-check/badge.svg)](https://github.com/matt-saenz/cpsR/actions)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+[![R-CMD-check](https://github.com/matt-saenz/cpsR/workflows/R-CMD-check/badge.svg)](https://github.com/matt-saenz/cpsR/actions)
 
 <!-- badges: end -->
 
@@ -16,7 +17,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 Load [Current Population Survey
 (CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata
-from the Census Bureau Data API into R, including [basic monthly
+into R using the Census Bureau Data API, including [basic monthly
 CPS](https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html)
 and [CPS
 ASEC](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html)
@@ -60,29 +61,29 @@ with others or post your scripts online (e.g., on GitHub).
 library(cpsR)
 library(dplyr)
 
-basic <- get_basic(
+sep21 <- get_basic(
   year = 2021,
-  month = 3,
+  month = 9,
   vars = c("prpertyp", "prtage", "pemlr", "pwcmpwgt")
 )
 
-basic
-#> # A tibble: 107,334 × 4
+sep21
+#> # A tibble: 103,858 × 4
 #>    prpertyp prtage pemlr pwcmpwgt
 #>       <int>  <int> <int>    <dbl>
-#>  1        2     55     5    3768.
-#>  2        2     59     5    3474.
-#>  3        2     26     1    4511.
-#>  4        2     68     5    1852.
-#>  5        2     69     5    1960.
-#>  6        2     41     7    4024.
-#>  7        2     41     1    3677.
-#>  8        1     12    -1       0 
-#>  9        1      8    -1       0 
-#> 10        2     70     5    1353.
-#> # … with 107,324 more rows
+#>  1        2     80     5    1361.
+#>  2        2     85     5    1411.
+#>  3        2     80     5    4619.
+#>  4        2     80     5    4587.
+#>  5        2     42     1    3677.
+#>  6        2     42     1    3645.
+#>  7        1      9    -1       0 
+#>  8        2     41     1    3652.
+#>  9        2     32     7    4117.
+#> 10        2     67     1    2479.
+#> # … with 103,848 more rows
 
-basic %>%
+sep21 %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
     pop16plus = sum(pwcmpwgt),
@@ -92,5 +93,5 @@ basic %>%
 #> # A tibble: 1 × 3
 #>    pop16plus   employed epop_ratio
 #>        <dbl>      <dbl>      <dbl>
-#> 1 261003019. 150492839.      0.577
+#> 1 261765646. 154025931.      0.588
 ```
