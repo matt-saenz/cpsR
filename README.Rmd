@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-Load [Current Population Survey (CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata from the Census Bureau Data API into R, including [basic monthly CPS](https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html) and [CPS ASEC](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html) microdata.
+Load [Current Population Survey (CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata into R using the Census Bureau Data API, including [basic monthly CPS](https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html) and [CPS ASEC](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html) microdata.
 
 Note: This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau.
 
@@ -55,15 +55,15 @@ Number two is particularly important if you plan to share your scripts with othe
 library(cpsR)
 library(dplyr)
 
-basic <- get_basic(
+sep21 <- get_basic(
   year = 2021,
-  month = 3,
+  month = 9,
   vars = c("prpertyp", "prtage", "pemlr", "pwcmpwgt")
 )
 
-basic
+sep21
 
-basic %>%
+sep21 %>%
   filter(prpertyp == 2 & prtage >= 16) %>%
   summarize(
     pop16plus = sum(pwcmpwgt),

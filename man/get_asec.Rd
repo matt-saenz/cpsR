@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_data.R
 \name{get_asec}
 \alias{get_asec}
-\title{Load CPS ASEC microdata from the Census API}
+\title{Load CPS ASEC microdata}
 \usage{
 get_asec(
   year,
@@ -35,8 +35,8 @@ as a base data frame.}
 
 \item{convert}{If \code{TRUE} (default), run
 \code{\link[utils:type.convert]{type.convert()}} with \code{as.is = TRUE}
-on the data returned from the Census API. If \code{FALSE}, all columns in
-the returned data will be character vectors (exactly as returned from the
+on the data returned by the Census API. If \code{FALSE}, all columns in
+the returned data will be character vectors (exactly as returned by the
 Census API).}
 }
 \value{
@@ -45,5 +45,5 @@ A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 \description{
 \code{get_asec()} loads
 \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
-microdata from the Census API.
+microdata using the Census API.
 }

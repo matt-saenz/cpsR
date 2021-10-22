@@ -1,13 +1,15 @@
 Package: cpsR
-Title: Load CPS Microdata From the Census API Into R
-Version: 0.4.0
+Title: Load CPS Microdata into R Using the Census API
+Version: 0.4.1
 Authors@R: 
     person(given = "Matt",
            family = "Saenz",
            role = c("aut", "cre"),
            email = "mattsaenz165@gmail.com")
-Description: Load Current Population Survey (CPS) microdata from the Census
-    Bureau Data API into R, including basic monthly CPS and CPS ASEC microdata.
+Description: Load Current Population Survey (CPS) microdata into R using the
+    Census Bureau Data API, including basic monthly CPS and CPS ASEC microdata.
+URL: https://github.com/matt-saenz/cpsR
+BugReports: https://github.com/matt-saenz/cpsR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
