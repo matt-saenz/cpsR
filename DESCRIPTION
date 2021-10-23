@@ -1,6 +1,6 @@
 Package: cpsR
 Title: Load CPS Microdata into R Using the Census API
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: 
     person(given = "Matt",
            family = "Saenz",
