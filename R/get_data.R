@@ -96,7 +96,7 @@ get_asec <- function(year, vars, key = get_key(),
 #' )
 #'
 #' sep21 %>%
-#'   filter(prpertyp == 2, prtage >= 16) %>%
+#'   filter(prpertyp == 2 & prtage >= 16) %>%
 #'   summarize(
 #'     lf = sum(pwcmpwgt[pemlr %in% 1:4]),
 #'     unem = sum(pwcmpwgt[pemlr %in% 3:4])
