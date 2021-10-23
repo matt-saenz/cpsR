@@ -47,3 +47,20 @@ A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
 microdata using the Census API.
 }
+\examples{
+\dontrun{
+
+library(cpsR)
+library(dplyr)
+
+asec21 <- get_asec(2021, vars = c("marsupwt", "spm_poor"))
+
+asec21 \%>\%
+  summarize(
+    pop = sum(marsupwt),
+    spm_pov = sum(marsupwt[spm_poor == 1])
+  ) \%>\%
+  mutate(spm_pov_rate = spm_pov / pop)
+}
+
+}

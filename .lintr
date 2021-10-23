@@ -13,4 +13,4 @@ linters: list(
   spaces_left_parentheses_linter = spaces_left_parentheses_linter,
   trailing_blank_lines_linter = trailing_blank_lines_linter,
   trailing_whitespace_linter = trailing_whitespace_linter)
-exclusions: list("R/get_data.R" = 66)
+exclusions: list("R/get_data.R" = 81)
