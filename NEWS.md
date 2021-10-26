@@ -1,3 +1,7 @@
+# cpsR 0.4.4
+
+* Simplified examples based on feedback from CRAN.
+
 # cpsR 0.4.3
 
 * Tweaked `DESCRIPTION` based on feedback from CRAN.
