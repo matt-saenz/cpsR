@@ -53,22 +53,11 @@ microdata using the Census API.
 \examples{
 \dontrun{
 
-library(cpsR)
-library(dplyr)
-
 sep21 <- get_basic(
   year = 2021,
   month = 9,
   vars = c("pwcmpwgt", "prpertyp", "prtage", "pemlr")
 )
-
-sep21 \%>\%
-  filter(prpertyp == 2 & prtage >= 16) \%>\%
-  summarize(
-    lf = sum(pwcmpwgt[pemlr \%in\% 1:4]),
-    unem = sum(pwcmpwgt[pemlr \%in\% 3:4])
-  ) \%>\%
-  mutate(unem_rate = unem / lf)
 }
 
 }

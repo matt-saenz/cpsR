@@ -29,17 +29,7 @@
 #' @examples
 #' \dontrun{
 #'
-#' library(cpsR)
-#' library(dplyr)
-#'
 #' asec21 <- get_asec(2021, vars = c("marsupwt", "spm_poor"))
-#'
-#' asec21 %>%
-#'   summarize(
-#'     pop = sum(marsupwt),
-#'     spm_pov = sum(marsupwt[spm_poor == 1])
-#'   ) %>%
-#'   mutate(spm_pov_rate = spm_pov / pop)
 #' }
 #'
 #' @export
@@ -86,22 +76,11 @@ get_asec <- function(year, vars, key = get_key(),
 #' @examples
 #' \dontrun{
 #'
-#' library(cpsR)
-#' library(dplyr)
-#'
 #' sep21 <- get_basic(
 #'   year = 2021,
 #'   month = 9,
 #'   vars = c("pwcmpwgt", "prpertyp", "prtage", "pemlr")
 #' )
-#'
-#' sep21 %>%
-#'   filter(prpertyp == 2 & prtage >= 16) %>%
-#'   summarize(
-#'     lf = sum(pwcmpwgt[pemlr %in% 1:4]),
-#'     unem = sum(pwcmpwgt[pemlr %in% 3:4])
-#'   ) %>%
-#'   mutate(unem_rate = unem / lf)
 #' }
 #'
 #' @export
