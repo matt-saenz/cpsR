@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/cpsR)](https://CRAN.R-project.org/package=cpsR)
 [![R-CMD-check](https://github.com/matt-saenz/cpsR/workflows/R-CMD-check/badge.svg)](https://github.com/matt-saenz/cpsR/actions)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -30,11 +32,19 @@ or certified by the Census Bureau.
 To install cpsR, run the following code:
 
 ``` r
+install.packages("cpsR")
+```
+
+To install the development version of cpsR, run the following code:
+
+``` r
 # install.packages("devtools")
 devtools::install_github("matt-saenz/cpsR")
 ```
 
-Next, register for a [Census API
+## Census API key
+
+Once you’ve installed cpsR, register for a [Census API
 key](https://api.census.gov/data/key_signup.html) if you don’t already
 have one. Once you have your key, store it in an environment variable
 named `CENSUS_API_KEY` for safe and easy use. You can do this in two
