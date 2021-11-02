@@ -11,6 +11,8 @@ status](https://www.r-pkg.org/badges/version/cpsR)](https://CRAN.R-project.org/p
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/cpsR)](https://cran.r-project.org/package=cpsR)
 
 <!-- badges: end -->
 
