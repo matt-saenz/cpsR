@@ -1,2 +1,8 @@
 url: https://matt-saenz.github.io/cpsR
 
+development:
+  mode: auto
+  version_label: default
+
+home:
+  strip_header: true
