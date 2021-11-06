@@ -10,8 +10,7 @@ Description: Load Current Population Survey (CPS) microdata into R using the
     'Census Bureau Data' API
     (<https://www.census.gov/data/developers/data-sets.html>), including basic
     monthly CPS and CPS ASEC microdata.
-URL: https://github.com/matt-saenz/cpsR,
-    https://matt-saenz.github.io/cpsR
+URL: https://matt-saenz.github.io/cpsR, https://github.com/matt-saenz/cpsR
 BugReports: https://github.com/matt-saenz/cpsR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
