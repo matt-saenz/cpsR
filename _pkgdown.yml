@@ -6,3 +6,6 @@ development:
 
 home:
   strip_header: true
+
+repo:
+  branch: main
