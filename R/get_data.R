@@ -6,7 +6,8 @@
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
 #' microdata using the Census API.
 #'
-#' @param year Year of data to retrieve.
+#' @param year Year of data to retrieve. Years 2014 to 2021 are currently
+#'   supported.
 #' @param vars Character vector of variables to retrieve, where each vector
 #'   element corresponds to the name of a single variable. Variable names can
 #'   be given in uppercase or lowercase but are always made lowercase in the
@@ -28,7 +29,6 @@
 #' @return A \href{https://tibble.tidyverse.org}{tibble} or base data frame.
 #' @examples
 #' \dontrun{
-#'
 #' asec21 <- get_asec(2021, vars = c("marsupwt", "spm_poor"))
 #' }
 #'
@@ -71,11 +71,12 @@ get_asec <- function(year, vars, key = get_key(),
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html}{basic monthly CPS}
 #' microdata using the Census API.
 #'
+#' @param year Year of data to retrieve. Years 1994 to 2021 are currently
+#'   supported.
 #' @param month Month of data to retrieve (specified as a number).
 #' @inherit get_asec params return
 #' @examples
 #' \dontrun{
-#'
 #' sep21 <- get_basic(
 #'   year = 2021,
 #'   month = 9,

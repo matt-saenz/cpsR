@@ -15,7 +15,8 @@ get_basic(
 )
 }
 \arguments{
-\item{year}{Year of data to retrieve.}
+\item{year}{Year of data to retrieve. Years 1994 to 2021 are currently
+supported.}
 
 \item{month}{Month of data to retrieve (specified as a number).}
 
@@ -52,7 +53,6 @@ microdata using the Census API.
 }
 \examples{
 \dontrun{
-
 sep21 <- get_basic(
   year = 2021,
   month = 9,

@@ -14,7 +14,8 @@ get_asec(
 )
 }
 \arguments{
-\item{year}{Year of data to retrieve.}
+\item{year}{Year of data to retrieve. Years 2014 to 2021 are currently
+supported.}
 
 \item{vars}{Character vector of variables to retrieve, where each vector
 element corresponds to the name of a single variable. Variable names can
@@ -49,7 +50,6 @@ microdata using the Census API.
 }
 \examples{
 \dontrun{
-
 asec21 <- get_asec(2021, vars = c("marsupwt", "spm_poor"))
 }
 
