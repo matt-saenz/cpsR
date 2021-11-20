@@ -58,9 +58,9 @@ strongly recommended for two reasons:
 1.  Saves you from having to copy-paste your key around
 2.  Allows you to avoid including your key in scripts
 
-Number two is particularly important if you plan to share your code with
-others (like in the [example](#example) below) since you should keep
-your key secret.
+It is important to avoid including your key in scripts if you plan to
+share your code with others (like in the [example](#example) below)
+since you should keep your key secret.
 
 You can set up env var `CENSUS_API_KEY` in two steps:
 
