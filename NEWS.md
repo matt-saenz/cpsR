@@ -1,5 +1,7 @@
 # cpsR (development version)
 
+* Support 2022 for the basic monthly CPS.
+
 # cpsR 0.4.5
 
 * Documentation updates and improvements.
