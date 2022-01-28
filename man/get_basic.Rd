@@ -15,7 +15,7 @@ get_basic(
 )
 }
 \arguments{
-\item{year}{Year of data to retrieve. Years 1994 to 2021 are currently
+\item{year}{Year of data to retrieve. Years 1994 to 2022 are currently
 supported.}
 
 \item{month}{Month of data to retrieve (specified as a number).}

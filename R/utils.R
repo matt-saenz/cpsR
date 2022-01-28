@@ -55,7 +55,7 @@ check_year <- function(year, dataset) {
 
   lookup <- list(
     asec = 2014:2021,
-    basic = 1994:2021
+    basic = 1994:2022
   )
 
   years <- lookup[[dataset]]
