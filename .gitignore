@@ -38,6 +38,3 @@ rsconnect/
 
 # Mac
 .DS_Store
-
-# pkgdown
-docs

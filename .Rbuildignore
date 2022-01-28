@@ -5,6 +5,3 @@
 ^README\.Rmd$
 ^\.lintr$
 ^CRAN-RELEASE$
-^_pkgdown\.yml$
-^docs$
-^pkgdown$
