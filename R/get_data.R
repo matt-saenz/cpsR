@@ -6,7 +6,7 @@
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
 #' microdata using the Census API.
 #'
-#' @param year Year of data to retrieve. Years 2014 to 2021 are currently
+#' @param year Year of data to retrieve. Years 2014 to 2022 are currently
 #'   supported.
 #' @param vars Character vector of variables to retrieve, where each vector
 #'   element corresponds to the name of a single variable. Variable names can
@@ -71,7 +71,7 @@ get_asec <- function(year, vars, key = get_key(),
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html}{basic monthly CPS}
 #' microdata using the Census API.
 #'
-#' @param year Year of data to retrieve. Years 1994 to 2022 are currently
+#' @param year Year of data to retrieve. Years 1989 to 2022 are currently
 #'   supported.
 #' @param month Month of data to retrieve (specified as a number).
 #' @inherit get_asec params return

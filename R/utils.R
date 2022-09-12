@@ -54,8 +54,8 @@ check_year <- function(year, dataset) {
   # Check available years here: https://data.census.gov/mdat/#/
 
   lookup <- list(
-    asec = 2014:2021,
-    basic = 1994:2022
+    asec = 2014:2022,
+    basic = 1989:2022
   )
 
   years <- lookup[[dataset]]
