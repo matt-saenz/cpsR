@@ -1,4 +1,4 @@
-# cpsR (development version)
+# cpsR 0.6.0
 
 * `get_asec()` now supports CPS ASEC microdata for 2022.
 * `get_basic()` now supports basic monthly CPS microdata for 1989 to 1993.
