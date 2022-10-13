@@ -35,7 +35,6 @@
 #' @export
 get_asec <- function(year, vars, key = get_key(),
                      show_url = FALSE, tibble = TRUE, convert = TRUE) {
-
   check_key(key)
 
   check_year_in_range(year, start_year = 2014, end_year = 2022)
@@ -74,7 +73,6 @@ get_asec <- function(year, vars, key = get_key(),
 #' @export
 get_basic <- function(year, month, vars, key = get_key(),
                       show_url = FALSE, tibble = TRUE, convert = TRUE) {
-
   check_key(key)
 
   check_year_in_range(year, start_year = 1989, end_year = 2022)
