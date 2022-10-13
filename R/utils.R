@@ -26,7 +26,7 @@ check_key <- function(key) {
 }
 
 
-format_vars <- function(vars) {
+check_vars <- function(vars) {
   if (!is.character(vars)) {
     stop("`vars` must be a character vector", call. = FALSE)
   }
@@ -41,29 +41,25 @@ format_vars <- function(vars) {
   if (any(duplicated(vars))) {
     stop("`vars` must not contain any duplicate elements", call. = FALSE)
   }
-
-  paste(toupper(vars), collapse = ",")
 }
 
 
-check_year <- function(year, dataset) {
+check_year_in_range <- function(year, start_year, end_year) {
   if (!is_number(year)) {
     stop("`year` must be a number", call. = FALSE)
   }
 
-  # Check available years here: https://data.census.gov/mdat/#/
-
-  lookup <- list(
-    asec = 2014:2022,
-    basic = 1989:2022
-  )
-
-  years <- lookup[[dataset]]
-
-  if (year %!in% years) {
+  if (year %!in% start_year:end_year) {
     stop(
-      "Invalid `year`, years ", min(years), " to ", max(years), " are currently supported",
+      "Invalid `year`, years ", start_year, " to ", end_year, " are currently supported",
       call. = FALSE
     )
+  }
+}
+
+
+check_month <- function(month) {
+  if (!is_number(month) || month %!in% 1:12) {
+    stop("`month` must be a number ranging from 1 to 12", call. = FALSE)
   }
 }

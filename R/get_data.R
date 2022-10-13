@@ -36,30 +36,17 @@
 get_asec <- function(year, vars, key = get_key(),
                      show_url = FALSE, tibble = TRUE, convert = TRUE) {
 
-  # Check args -----------------------------------------------------------------
-
   check_key(key)
-  check_year(year, dataset = "asec")
-  vars <- format_vars(vars)
 
-  # Get data -------------------------------------------------------------------
+  check_year_in_range(year, start_year = 2014, end_year = 2022)
 
-  url <- httr::modify_url(
-    url = "https://api.census.gov",
-    path = paste0("data/", year, "/cps/asec/mar"),
-    query = list(get = vars, key = key)
-  )
+  month <- 3 # Month of CPS ASEC is always March
+
+  url <- make_url("asec", year, month, vars, key)
 
   message("Getting CPS ASEC microdata for ", year)
 
-  df <- get_data(
-    url = url,
-    show_url = show_url,
-    tibble = tibble,
-    convert = convert
-  )
-
-  # Return data ----------------------------------------------------------------
+  df <- get_data(url, show_url, tibble, convert)
 
   df
 }
@@ -88,40 +75,34 @@ get_asec <- function(year, vars, key = get_key(),
 get_basic <- function(year, month, vars, key = get_key(),
                       show_url = FALSE, tibble = TRUE, convert = TRUE) {
 
-  # Check args -----------------------------------------------------------------
-
   check_key(key)
-  check_year(year, dataset = "basic")
 
-  if (!is_number(month) || month %!in% 1:12) {
-    stop("`month` must be a number ranging from 1 to 12", call. = FALSE)
-  }
+  check_year_in_range(year, start_year = 1989, end_year = 2022)
 
-  vars <- format_vars(vars)
+  url <- make_url("basic", year, month, vars, key)
 
-  # Get data -------------------------------------------------------------------
+  message(paste("Getting basic monthly CPS microdata for", month.name[month], year))
 
-  month_abb <- tolower(month.abb)[month] # Format for Census API
-  month_name <- month.name[month] # Format for message
+  df <- get_data(url, show_url, tibble, convert)
+
+  df
+}
+
+
+make_url <- function(dataset, year, month, vars, key) {
+  check_month(month)
+  check_vars(vars)
+
+  month_abb <- tolower(month.abb)[month]
+  collapsed_vars <- paste(toupper(vars), collapse = ",")
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = paste0("data/", year, "/cps/basic/", month_abb),
-    query = list(get = vars, key = key)
+    path = paste("data", year, "cps", dataset, month_abb, sep = "/"),
+    query = list(get = collapsed_vars, key = key)
   )
 
-  message(paste("Getting basic monthly CPS microdata for", month_name, year))
-
-  df <- get_data(
-    url = url,
-    show_url = show_url,
-    tibble = tibble,
-    convert = convert
-  )
-
-  # Return data ----------------------------------------------------------------
-
-  df
+  url
 }
 
 
