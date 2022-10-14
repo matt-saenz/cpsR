@@ -139,23 +139,28 @@ get_data <- function(url, show_url, tibble, convert) {
     stop("Census API data not parsed as expected", call. = FALSE)
   }
 
-  # Make data frame ------------------------------------------------------------
+  # Build data frame -----------------------------------------------------------
 
+  df <- build_df(mat, tibble, convert)
+
+  # Return data frame ----------------------------------------------------------
+
+  df
+}
+
+
+build_df <- function(mat, tibble, convert) {
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
   cols <- mat[-1, , drop = FALSE] # Character matrix of columns
 
   df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
   names(df) <- tolower(col_names) # Column names are always made lowercase
 
-  if (convert) {
-    df <- utils::type.convert(df, as.is = TRUE)
-  }
-
   if (tibble) {
     df <- tibble::as_tibble(df)
   }
 
-  # Return data frame ----------------------------------------------------------
-
-  df
+  if (convert) {
+    df <- utils::type.convert(df, as.is = TRUE)
+  }
 }
