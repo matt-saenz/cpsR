@@ -109,20 +109,14 @@ get_data <- function(url, show_url, tibble, convert) {
     message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
   }
 
-  # Send request ---------------------------------------------------------------
-
   ua <- httr::user_agent("https://github.com/matt-saenz/cpsR")
   resp <- httr::GET(url, ua)
 
-  # Check response -------------------------------------------------------------
-
-  status_code <- resp$status_code
-
-  if (status_code != 200) {
+  if (resp$status_code != 200) {
     status <- httr::http_status(resp)
 
     stop(
-      "Census API request failed [", status_code, "]: ", status$reason,
+      "Census API request failed [", resp$status_code, "]: ", status$reason,
       call. = FALSE
     )
   }
@@ -131,19 +125,13 @@ get_data <- function(url, show_url, tibble, convert) {
     stop("Census API did not return JSON", call. = FALSE)
   }
 
-  # Parse response -------------------------------------------------------------
-
   mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
 
   if (!is.matrix(mat) || !is.character(mat)) {
     stop("Census API data not parsed as expected", call. = FALSE)
   }
 
-  # Build data frame -----------------------------------------------------------
-
   df <- build_df(mat, tibble, convert)
-
-  # Return data frame ----------------------------------------------------------
 
   df
 }
