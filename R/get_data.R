@@ -35,31 +35,17 @@
 #' @export
 get_asec <- function(year, vars, key = get_key(),
                      show_url = FALSE, tibble = TRUE, convert = TRUE) {
-
-  # Check args -----------------------------------------------------------------
-
   check_key(key)
-  check_year(year, dataset = "asec")
-  vars <- format_vars(vars)
 
-  # Get data -------------------------------------------------------------------
+  check_year_in_range(year, start_year = 2014, end_year = 2022)
 
-  url <- httr::modify_url(
-    url = "https://api.census.gov",
-    path = paste0("data/", year, "/cps/asec/mar"),
-    query = list(get = vars, key = key)
-  )
+  month <- 3 # Month of CPS ASEC is always March
+
+  url <- make_url("asec", year, month, vars, key)
 
   message("Getting CPS ASEC microdata for ", year)
 
-  df <- get_data(
-    url = url,
-    show_url = show_url,
-    tibble = tibble,
-    convert = convert
-  )
-
-  # Return data ----------------------------------------------------------------
+  df <- get_data(url, show_url, tibble, convert)
 
   df
 }
@@ -87,41 +73,34 @@ get_asec <- function(year, vars, key = get_key(),
 #' @export
 get_basic <- function(year, month, vars, key = get_key(),
                       show_url = FALSE, tibble = TRUE, convert = TRUE) {
-
-  # Check args -----------------------------------------------------------------
-
   check_key(key)
-  check_year(year, dataset = "basic")
 
-  if (!is_number(month) || month %!in% 1:12) {
-    stop("`month` must be a number ranging from 1 to 12", call. = FALSE)
-  }
+  check_year_in_range(year, start_year = 1989, end_year = 2022)
 
-  vars <- format_vars(vars)
+  url <- make_url("basic", year, month, vars, key)
 
-  # Get data -------------------------------------------------------------------
+  message(paste("Getting basic monthly CPS microdata for", month.name[month], year))
 
-  month_abb <- tolower(month.abb)[month] # Format for Census API
-  month_name <- month.name[month] # Format for message
+  df <- get_data(url, show_url, tibble, convert)
+
+  df
+}
+
+
+make_url <- function(dataset, year, month, vars, key) {
+  check_month(month)
+  check_vars(vars)
+
+  month_abb <- tolower(month.abb[month])
+  collapsed_vars <- toupper(paste(vars, collapse = ","))
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
-    path = paste0("data/", year, "/cps/basic/", month_abb),
-    query = list(get = vars, key = key)
+    path = paste("data", year, "cps", dataset, month_abb, sep = "/"),
+    query = list(get = collapsed_vars, key = key)
   )
 
-  message(paste("Getting basic monthly CPS microdata for", month_name, year))
-
-  df <- get_data(
-    url = url,
-    show_url = show_url,
-    tibble = tibble,
-    convert = convert
-  )
-
-  # Return data ----------------------------------------------------------------
-
-  df
+  url
 }
 
 
@@ -130,20 +109,14 @@ get_data <- function(url, show_url, tibble, convert) {
     message("URL: ", sub(pattern = "&key=.*", replacement = "", x = url))
   }
 
-  # Send request ---------------------------------------------------------------
-
   ua <- httr::user_agent("https://github.com/matt-saenz/cpsR")
   resp <- httr::GET(url, ua)
 
-  # Check response -------------------------------------------------------------
-
-  status_code <- resp$status_code
-
-  if (status_code != 200) {
+  if (resp$status_code != 200) {
     status <- httr::http_status(resp)
 
     stop(
-      "Census API request failed [", status_code, "]: ", status$reason,
+      "Census API request failed [", resp$status_code, "]: ", status$reason,
       call. = FALSE
     )
   }
@@ -152,31 +125,32 @@ get_data <- function(url, show_url, tibble, convert) {
     stop("Census API did not return JSON", call. = FALSE)
   }
 
-  # Parse response -------------------------------------------------------------
-
   mat <- jsonlite::fromJSON(httr::content(resp, as = "text"))
 
   if (!is.matrix(mat) || !is.character(mat)) {
     stop("Census API data not parsed as expected", call. = FALSE)
   }
 
-  # Make data frame ------------------------------------------------------------
+  df <- build_df(mat, tibble, convert)
 
+  df
+}
+
+
+build_df <- function(mat, tibble, convert) {
   col_names <- mat[1, , drop = TRUE] # Character vector of column names
   cols <- mat[-1, , drop = FALSE] # Character matrix of columns
 
   df <- as.data.frame(cols, stringsAsFactors = FALSE) # All columns are character vectors
   names(df) <- tolower(col_names) # Column names are always made lowercase
 
-  if (convert) {
-    df <- utils::type.convert(df, as.is = TRUE)
-  }
-
   if (tibble) {
     df <- tibble::as_tibble(df)
   }
 
-  # Return data frame ----------------------------------------------------------
+  if (convert) {
+    df <- utils::type.convert(df, as.is = TRUE)
+  }
 
   df
 }
