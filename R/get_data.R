@@ -163,4 +163,6 @@ build_df <- function(mat, tibble, convert) {
   if (convert) {
     df <- utils::type.convert(df, as.is = TRUE)
   }
+
+  df
 }
