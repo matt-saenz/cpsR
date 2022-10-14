@@ -28,6 +28,9 @@ microdata.
 Note: This product uses the Census Bureau Data API but is not endorsed
 or certified by the Census Bureau.
 
+For a Python version of this package, check out
+[PyCPS](https://github.com/matt-saenz/PyCPS).
+
 ## Installation
 
 To install cpsR, run the following code:
