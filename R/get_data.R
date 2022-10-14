@@ -91,8 +91,8 @@ make_url <- function(dataset, year, month, vars, key) {
   check_month(month)
   check_vars(vars)
 
-  month_abb <- tolower(month.abb)[month]
-  collapsed_vars <- paste(toupper(vars), collapse = ",")
+  month_abb <- tolower(month.abb[month])
+  collapsed_vars <- toupper(paste(vars, collapse = ","))
 
   url <- httr::modify_url(
     url = "https://api.census.gov",
