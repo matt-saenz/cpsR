@@ -6,7 +6,7 @@
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html}{CPS ASEC}
 #' microdata using the Census API.
 #'
-#' @param year Year of data to retrieve. Years 2014 to 2022 are currently
+#' @param year Year of data to retrieve. Years 1992 to 2022 are currently
 #'   supported.
 #' @param vars Character vector of variables to retrieve, where each vector
 #'   element corresponds to the name of a single variable. Variable names can
@@ -37,7 +37,7 @@ get_asec <- function(year, vars, key = get_key(),
                      show_url = FALSE, tibble = TRUE, convert = TRUE) {
   check_key(key)
 
-  check_year_in_range(year, start_year = 2014, end_year = 2022)
+  check_year_in_range(year, start_year = 1992, end_year = 2022)
 
   month <- 3 # Month of CPS ASEC is always March
 
@@ -57,7 +57,7 @@ get_asec <- function(year, vars, key = get_key(),
 #' \href{https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html}{basic monthly CPS}
 #' microdata using the Census API.
 #'
-#' @param year Year of data to retrieve. Years 1989 to 2022 are currently
+#' @param year Year of data to retrieve. Years 1989 to 2023 are currently
 #'   supported.
 #' @param month Month of data to retrieve (specified as a number).
 #' @inherit get_asec params return
@@ -75,7 +75,7 @@ get_basic <- function(year, month, vars, key = get_key(),
                       show_url = FALSE, tibble = TRUE, convert = TRUE) {
   check_key(key)
 
-  check_year_in_range(year, start_year = 1989, end_year = 2022)
+  check_year_in_range(year, start_year = 1989, end_year = 2023)
 
   url <- make_url("basic", year, month, vars, key)
 
