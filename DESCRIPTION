@@ -1,7 +1,7 @@
 Package: cpsR
 Title: Load CPS Microdata into R Using the 'Census Bureau Data' API
-Version: 0.7.0
-Authors@R: 
+Version: 0.7.0.9000
+Authors@R:
     person(given = "Matt",
            family = "Saenz",
            role = c("aut", "cre"),
@@ -15,7 +15,7 @@ BugReports: https://github.com/matt-saenz/cpsR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.2.1
-Imports: 
+Imports:
     httr,
     jsonlite,
     tibble
