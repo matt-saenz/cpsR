@@ -1,5 +1,7 @@
 # cpsR (development version)
 
+* `get_asec()` and `get_basic()` no longer set an upper limit on supported years.
+
 # cpsR 0.7.0
 
 * `get_asec()` now supports CPS ASEC microdata for 1992 to 2013.
