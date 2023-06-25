@@ -75,7 +75,7 @@ usethis::edit_r_environ()
 
 Second, add your Census API key to your `.Renviron` file like so:
 
-    CENSUS_API_KEY="your_key_here"
+    CENSUS_API_KEY='your_key_here'
 
 This enables cpsR functions to automatically look up your key by
 running:
@@ -114,7 +114,7 @@ sep21
 #>  8        2     41     1    3652.
 #>  9        2     32     7    4117.
 #> 10        2     67     1    2479.
-#> # … with 103,848 more rows
+#> # ℹ 103,848 more rows
 
 sep21 %>%
   filter(prpertyp == 2 & prtage >= 16) %>%

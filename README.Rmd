@@ -72,7 +72,7 @@ usethis::edit_r_environ()
 Second, add your Census API key to your `.Renviron` file like so:
 
 ```
-CENSUS_API_KEY="your_key_here"
+CENSUS_API_KEY='your_key_here'
 ```
 
 This enables cpsR functions to automatically look up your key by running:

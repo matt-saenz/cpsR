@@ -14,7 +14,7 @@ get_asec(
 )
 }
 \arguments{
-\item{year}{Year of data to retrieve. Years 1992 to 2022 are currently
+\item{year}{Year of data to retrieve. Years 1992 and on are currently
 supported.}
 
 \item{vars}{Character vector of variables to retrieve, where each vector

@@ -1,5 +1,3 @@
-
-
 is_number <- function(x) is.numeric(x) && length(x) == 1
 is_string <- function(x) is.character(x) && length(x) == 1
 `%!in%` <- function(x, table) match(x, table, nomatch = 0) == 0
@@ -44,14 +42,14 @@ check_vars <- function(vars) {
 }
 
 
-check_year_in_range <- function(year, start_year, end_year) {
+check_year <- function(year, min_year) {
   if (!is_number(year)) {
     stop("`year` must be a number", call. = FALSE)
   }
 
-  if (year %!in% start_year:end_year) {
+  if (year < min_year) {
     stop(
-      "Invalid `year`, years ", start_year, " to ", end_year, " are currently supported",
+      "Invalid `year`, years ", min_year, " and on are currently supported",
       call. = FALSE
     )
   }
