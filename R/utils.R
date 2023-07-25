@@ -36,7 +36,7 @@ check_vars <- function(vars) {
     )
   }
 
-  if (any(duplicated(vars))) {
+  if (any(duplicated(tolower(vars)))) {
     stop("`vars` must not contain any duplicate elements", call. = FALSE)
   }
 }
