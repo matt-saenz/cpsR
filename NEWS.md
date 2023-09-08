@@ -1,4 +1,4 @@
-# cpsR (development version)
+# cpsR 1.0.0
 
 * `get_asec()` and `get_basic()` no longer set an upper limit on supported years.
 
